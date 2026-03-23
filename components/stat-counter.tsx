@@ -47,8 +47,9 @@ export function StatCounter({
     const interval = setInterval(() => {
       const elapsed = Date.now() - startTime
       const progress = Math.min(elapsed / duration, 1)
-      
-      setCount(Math.floor(endValue * progress))
+      const eased = 1 - Math.pow(1 - progress, 3) // ease-out cubic
+
+      setCount(Math.floor(endValue * eased))
 
       if (progress === 1) {
         clearInterval(interval)
@@ -61,14 +62,23 @@ export function StatCounter({
   return (
     <div
       ref={ref}
-      className={`${highlight ? 'md:col-span-2' : ''} animate-slide-up`}
+      className={`${highlight ? 'md:col-span-2' : ''}`}
     >
-      <p className="text-4xl sm:text-5xl font-bold text-primary mb-2">
-        {count}
-        {suffix}
+      <p
+        className="text-5xl sm:text-6xl font-bold mb-2"
+        style={{
+          background: 'linear-gradient(135deg, #a78bfa 0%, #6366f1 50%, #06b6d4 100%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          backgroundClip: 'text',
+        }}
+      >
+        {count}{suffix}
       </p>
-      <p className="text-base font-medium text-foreground mb-1">{label}</p>
-      {footnote && <p className="text-sm text-gray-600 dark:text-gray-400 italic">{footnote}</p>}
+      <p className="text-base font-semibold text-white mb-1">{label}</p>
+      {footnote && (
+        <p className="text-sm italic" style={{ color: '#64748b' }}>{footnote}</p>
+      )}
     </div>
   )
 }

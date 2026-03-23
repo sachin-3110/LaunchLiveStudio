@@ -1,9 +1,10 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter, Space_Mono } from 'next/font/google'
+import { Inter, Space_Grotesk, Space_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin', 'latin-ext'] })
+const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], weight: ['400', '500', '600', '700'] })
 const spaceMono = Space_Mono({ weight: ['400', '700'], subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -37,7 +38,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} bg-background text-foreground antialiased`}>
+      <body className={`${spaceGrotesk.className} bg-background text-foreground antialiased`}>
         {children}
         <Analytics />
       </body>
