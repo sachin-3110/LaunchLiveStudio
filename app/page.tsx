@@ -2,8 +2,10 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import { ChevronRight, Menu, X, ArrowUpRight } from 'lucide-react'
+import { ChevronRight, Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { AnimatedSection } from '@/components/animated-section'
+import { StatCounter } from '@/components/stat-counter'
 
 const translations = {
   en: {
@@ -20,9 +22,9 @@ const translations = {
     },
     stats: {
       metrics: [
-        { number: '20K+', label: 'Creators', highlight: false },
-        { number: '1.5B+', label: 'Total Monthly Reach', highlight: true, footnote: 'Powerful audience connections' },
-        { number: '150%', label: 'Stronger Community', highlight: false, footnote: 'Community connection vs average' },
+        { value: '20K', suffix: '+', label: 'Creators', highlight: false },
+        { value: '1.5B', suffix: '+', label: 'Total Monthly Reach', highlight: true, footnote: 'Powerful audience connections' },
+        { value: '150', suffix: '%', label: 'Stronger Community', highlight: false, footnote: 'Community connection vs average' },
       ],
     },
     creators: {
@@ -59,9 +61,9 @@ const translations = {
     },
     stats: {
       metrics: [
-        { number: '20K+', label: 'रचनाकार', highlight: false },
-        { number: '1.5B+', label: 'कुल मासिक पहुंच', highlight: true, footnote: 'शक्तिशाली दर्शक कनेक्शन' },
-        { number: '150%', label: 'मजबूत सामुदायिक', highlight: false, footnote: 'औसत की तुलना में कनेक्शन' },
+        { value: '20K', suffix: '+', label: 'रचनाकार', highlight: false },
+        { value: '1.5B', suffix: '+', label: 'कुल मासिक पहुंच', highlight: true, footnote: 'शक्तिशाली दर्शक कनेक्शन' },
+        { value: '150', suffix: '%', label: 'मजबूत सामुदायिक', highlight: false, footnote: 'औसत की तुलना में कनेक्शन' },
       ],
     },
     creators: {
@@ -98,9 +100,9 @@ const translations = {
     },
     stats: {
       metrics: [
-        { number: '20K+', label: 'Creadores', highlight: false },
-        { number: '1.5B+', label: 'Alcance Mensual Total', highlight: true, footnote: 'Conexiones de audiencia poderosas' },
-        { number: '150%', label: 'Comunidad Más Fuerte', highlight: false, footnote: 'Conexión vs promedio' },
+        { value: '20K', suffix: '+', label: 'Creadores', highlight: false },
+        { value: '1.5B', suffix: '+', label: 'Alcance Mensual Total', highlight: true, footnote: 'Conexiones de audiencia poderosas' },
+        { value: '150', suffix: '%', label: 'Comunidad Más Fuerte', highlight: false, footnote: 'Conexión vs promedio' },
       ],
     },
     creators: {
@@ -137,9 +139,9 @@ const translations = {
     },
     stats: {
       metrics: [
-        { number: '20K+', label: 'Creator', highlight: false },
-        { number: '1.5B+', label: 'Gesamtmonatliche Reichweite', highlight: true, footnote: 'Starke Publikumsverbindungen' },
-        { number: '150%', label: 'Stärkere Gemeinschaft', highlight: false, footnote: 'Verbindung vs. Durchschnitt' },
+        { value: '20K', suffix: '+', label: 'Creator', highlight: false },
+        { value: '1.5B', suffix: '+', label: 'Gesamtmonatliche Reichweite', highlight: true, footnote: 'Starke Publikumsverbindungen' },
+        { value: '150', suffix: '%', label: 'Stärkere Gemeinschaft', highlight: false, footnote: 'Verbindung vs. Durchschnitt' },
       ],
     },
     creators: {
@@ -176,42 +178,60 @@ export default function Home() {
   const t = translations[language]
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black">
+    <div className="min-h-screen bg-white dark:bg-black overflow-hidden">
       {/* Navigation */}
-      <nav className="fixed w-full bg-white/95 dark:bg-black/95 backdrop-blur-sm z-50 border-b border-gray-200 dark:border-gray-800">
+      <nav className="fixed w-full bg-white/80 dark:bg-black/80 backdrop-blur-md z-50 border-b border-gray-200/50 dark:border-gray-800/50 transition-smooth">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
-            <div className="flex-shrink-0">
+            <div className="flex-shrink-0 hover-lift cursor-pointer">
               <Image src="/logo.png" alt="Curious Media" width={35} height={35} className="h-9 w-auto" />
             </div>
 
             {/* Desktop Menu */}
-            <div className="hidden md:flex items-center gap-8">
+            <div className="hidden md:flex items-center gap-12">
               <button
                 onClick={() => setActiveTab('creators')}
-                className={`text-sm font-medium transition ${activeTab === 'creators' ? 'text-foreground' : 'text-gray-600 dark:text-gray-400 hover:text-foreground'}`}
+                className={`text-sm font-medium transition-smooth relative group ${
+                  activeTab === 'creators'
+                    ? 'text-foreground'
+                    : 'text-gray-600 dark:text-gray-400'
+                }`}
               >
                 {t.nav.creators}
+                <span
+                  className={`absolute bottom-0 left-0 h-0.5 bg-primary transition-smooth ${
+                    activeTab === 'creators' ? 'w-full' : 'w-0 group-hover:w-full'
+                  }`}
+                />
               </button>
               <button
                 onClick={() => setActiveTab('brands')}
-                className={`text-sm font-medium transition ${activeTab === 'brands' ? 'text-foreground' : 'text-gray-600 dark:text-gray-400 hover:text-foreground'}`}
+                className={`text-sm font-medium transition-smooth relative group ${
+                  activeTab === 'brands'
+                    ? 'text-foreground'
+                    : 'text-gray-600 dark:text-gray-400'
+                }`}
               >
                 {t.nav.brands}
+                <span
+                  className={`absolute bottom-0 left-0 h-0.5 bg-primary transition-smooth ${
+                    activeTab === 'brands' ? 'w-full' : 'w-0 group-hover:w-full'
+                  }`}
+                />
               </button>
             </div>
 
             {/* Language & Mobile Menu */}
             <div className="flex items-center gap-3">
-              <div className="flex items-center gap-1 bg-gray-100 dark:bg-gray-900 rounded p-1">
+              <div className="flex items-center gap-1 bg-gray-100/80 dark:bg-gray-900/80 rounded-lg p-1 backdrop-blur-sm transition-smooth">
                 {(['en', 'hi', 'es', 'de'] as const).map((lang) => (
                   <button
                     key={lang}
                     onClick={() => setLanguage(lang)}
-                    className={`px-2 py-1 text-xs font-medium rounded transition ${
+                    className={`px-2 py-1 text-xs font-medium rounded transition-smooth ${
                       language === lang
-                        ? 'bg-primary text-white'
+                        ? 'bg-primary text-white shadow-lg scale-105'
                         : 'text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-800'
                     }`}
                   >
@@ -222,7 +242,7 @@ export default function Home() {
 
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="md:hidden p-2 text-gray-600 dark:text-gray-400"
+                className="md:hidden p-2 text-gray-600 dark:text-gray-400 hover:text-foreground transition-smooth hover-lift"
               >
                 {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </button>
@@ -231,16 +251,16 @@ export default function Home() {
 
           {/* Mobile Menu */}
           {mobileMenuOpen && (
-            <div className="md:hidden pb-4 space-y-3 border-t border-gray-200 dark:border-gray-800">
+            <div className="md:hidden pb-4 space-y-3 border-t border-gray-200 dark:border-gray-800 animate-slide-down">
               <button
                 onClick={() => { setActiveTab('creators'); setMobileMenuOpen(false); }}
-                className="block w-full text-left text-sm font-medium hover:text-primary transition py-2"
+                className="block w-full text-left text-sm font-medium hover:text-primary transition-smooth py-2"
               >
                 {t.nav.creators}
               </button>
               <button
                 onClick={() => { setActiveTab('brands'); setMobileMenuOpen(false); }}
-                className="block w-full text-left text-sm font-medium hover:text-primary transition py-2"
+                className="block w-full text-left text-sm font-medium hover:text-primary transition-smooth py-2"
               >
                 {t.nav.brands}
               </button>
@@ -250,54 +270,84 @@ export default function Home() {
       </nav>
 
       {/* Hero Section - Dual Tab */}
-      <section className="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
+      <section className="pt-28 pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto">
-          <div className="space-y-12">
-            <div className="space-y-8">
-              {activeTab === 'creators' ? (
-                <div className="space-y-8 animate-fade-in">
-                  <h1 className="text-5xl sm:text-6xl font-bold text-balance leading-tight">
+          <div className="space-y-12 min-h-96">
+            {activeTab === 'creators' ? (
+              <AnimatedSection animation="slide-up" delay={0}>
+                <div className="space-y-8">
+                  <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-balance leading-tight">
                     {t.hero.creatorsTitle}
                   </h1>
-                  <p className="text-xl text-gray-600 dark:text-gray-300 text-pretty leading-relaxed max-w-3xl">
+                  <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 text-pretty leading-relaxed max-w-3xl">
                     {t.hero.creatorsSubtitle}
                   </p>
-                  <Button size="lg" className="bg-primary hover:bg-blue-700 text-white">
-                    {t.hero.cta} <ChevronRight className="ml-2 w-4 h-4" />
-                  </Button>
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <Button
+                      size="lg"
+                      className="bg-primary hover:bg-blue-700 text-white hover-lift shadow-lg"
+                    >
+                      {t.hero.cta} <ChevronRight className="ml-2 w-4 h-4" />
+                    </Button>
+                    <Button
+                      size="lg"
+                      variant="outline"
+                      className="hover-lift transition-smooth"
+                    >
+                      Learn more
+                    </Button>
+                  </div>
                 </div>
-              ) : (
-                <div className="space-y-8 animate-fade-in">
-                  <h1 className="text-5xl sm:text-6xl font-bold text-balance leading-tight">
+              </AnimatedSection>
+            ) : (
+              <AnimatedSection animation="slide-up" delay={0}>
+                <div className="space-y-8">
+                  <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-balance leading-tight">
                     {t.hero.brandsTitle}
                   </h1>
-                  <p className="text-xl text-gray-600 dark:text-gray-300 text-pretty leading-relaxed max-w-3xl">
+                  <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 text-pretty leading-relaxed max-w-3xl">
                     {t.hero.brandsSubtitle}
                   </p>
-                  <Button size="lg" className="bg-primary hover:bg-blue-700 text-white">
-                    {t.hero.cta} <ChevronRight className="ml-2 w-4 h-4" />
-                  </Button>
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <Button
+                      size="lg"
+                      className="bg-primary hover:bg-blue-700 text-white hover-lift shadow-lg"
+                    >
+                      {t.hero.cta} <ChevronRight className="ml-2 w-4 h-4" />
+                    </Button>
+                    <Button
+                      size="lg"
+                      variant="outline"
+                      className="hover-lift transition-smooth"
+                    >
+                      Explore
+                    </Button>
+                  </div>
                 </div>
-              )}
-            </div>
+              </AnimatedSection>
+            )}
           </div>
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 border-y border-gray-200 dark:border-gray-800">
+      {/* Stats Section with Animations */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 border-y border-gray-200/50 dark:border-gray-800/50">
         <div className="max-w-5xl mx-auto">
           <div className="grid md:grid-cols-3 gap-8">
             {t.stats.metrics.map((metric, i) => (
-              <div key={i} className={metric.highlight ? 'md:col-span-2' : ''}>
-                <p className="text-4xl sm:text-5xl font-bold text-primary mb-2">
-                  {metric.number}
-                </p>
-                <p className="text-base font-medium text-foreground mb-1">{metric.label}</p>
-                {metric.footnote && (
-                  <p className="text-sm text-gray-600 dark:text-gray-400 italic">{metric.footnote}</p>
-                )}
-              </div>
+              <AnimatedSection
+                key={i}
+                animation="slide-up"
+                delay={i * 100}
+              >
+                <StatCounter
+                  endValue={parseInt(metric.value)}
+                  suffix={metric.suffix}
+                  label={metric.label}
+                  highlight={metric.highlight}
+                  footnote={metric.footnote}
+                />
+              </AnimatedSection>
             ))}
           </div>
         </div>
@@ -306,70 +356,108 @@ export default function Home() {
       {/* Creators Carousel */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold">{t.creators.title}</h2>
-            <a href="#" className="inline-flex items-center gap-2 text-primary font-medium hover:underline">
-              {t.creators.seeMore} <ChevronRight className="w-4 h-4" />
-            </a>
-          </div>
+          <AnimatedSection animation="slide-up">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-12">
+              <h2 className="text-3xl sm:text-4xl font-bold">{t.creators.title}</h2>
+              <a
+                href="#"
+                className="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-smooth hover-lift"
+              >
+                {t.creators.seeMore} <ChevronRight className="w-4 h-4" />
+              </a>
+            </div>
+          </AnimatedSection>
 
-          {/* Creators Grid */}
+          {/* Creators Grid with Stagger */}
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 mb-8">
             {creatorLogos.map((creator, i) => (
-              <div key={i} className="bg-gray-100 dark:bg-gray-900 rounded-lg p-8 flex items-center justify-center h-32 hover:shadow-md transition cursor-pointer">
-                <span className="text-sm font-medium text-gray-600 dark:text-gray-400 text-center">{creator}</span>
-              </div>
+              <AnimatedSection
+                key={i}
+                animation="bounce-in"
+                delay={i * 50}
+              >
+                <div className="bg-gradient-to-br from-gray-100 to-gray-50 dark:from-gray-900 dark:to-gray-950 rounded-lg p-8 flex items-center justify-center h-32 hover-lift cursor-pointer border border-gray-200/50 dark:border-gray-800/50 transition-smooth group">
+                  <span className="text-sm font-medium text-gray-600 dark:text-gray-400 text-center group-hover:text-primary transition-smooth">
+                    {creator}
+                  </span>
+                </div>
+              </AnimatedSection>
             ))}
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
             {creatorLogos.slice(0, 5).map((creator, i) => (
-              <div key={i} className="bg-gray-100 dark:bg-gray-900 rounded-lg p-8 flex items-center justify-center h-32 hover:shadow-md transition cursor-pointer">
-                <span className="text-sm font-medium text-gray-600 dark:text-gray-400 text-center">{creator}</span>
-              </div>
+              <AnimatedSection
+                key={i}
+                animation="bounce-in"
+                delay={(i + 10) * 50}
+              >
+                <div className="bg-gradient-to-br from-gray-100 to-gray-50 dark:from-gray-900 dark:to-gray-950 rounded-lg p-8 flex items-center justify-center h-32 hover-lift cursor-pointer border border-gray-200/50 dark:border-gray-800/50 transition-smooth group">
+                  <span className="text-sm font-medium text-gray-600 dark:text-gray-400 text-center group-hover:text-primary transition-smooth">
+                    {creator}
+                  </span>
+                </div>
+              </AnimatedSection>
             ))}
           </div>
         </div>
       </section>
 
       {/* News & Stories Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-900">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900/50 dark:to-black">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-12">{t.news.title}</h2>
+          <AnimatedSection animation="slide-up">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-12">{t.news.title}</h2>
+          </AnimatedSection>
 
-          <div className="space-y-6">
+          <div className="space-y-4">
             {t.news.items.map((item, i) => (
-              <a
+              <AnimatedSection
                 key={i}
-                href="#"
-                className="block p-6 border border-gray-200 dark:border-gray-800 rounded-lg hover:border-primary dark:hover:border-primary transition group"
+                animation="slide-up"
+                delay={i * 50}
               >
-                <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition">
-                  {item.title}
-                </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">{item.date}</p>
-              </a>
+                <a
+                  href="#"
+                  className="block p-6 border border-gray-200/50 dark:border-gray-800/50 rounded-lg hover:border-primary/50 dark:hover:border-primary/50 transition-smooth group hover-lift bg-white dark:bg-gray-900/30 backdrop-blur-sm"
+                >
+                  <h3 className="text-base sm:text-lg font-semibold mb-3 group-hover:text-primary transition-smooth line-clamp-2">
+                    {item.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">{item.date}</p>
+                </a>
+              </AnimatedSection>
             ))}
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-12 px-4 sm:px-6 lg:px-8 bg-white dark:bg-black border-t border-gray-200 dark:border-gray-800">
+      <footer className="py-12 px-4 sm:px-6 lg:px-8 bg-white dark:bg-black border-t border-gray-200/50 dark:border-gray-800/50">
         <div className="max-w-5xl mx-auto">
-          <div className="flex flex-col sm:flex-row justify-between items-start gap-8 mb-8">
-            <Image src="/logo.png" alt="Curious Media" width={30} height={30} className="h-8 w-auto" />
-            <div className="flex flex-wrap gap-6 text-sm">
-              {t.footer.links.map((link, i) => (
-                <a key={i} href="#" className="text-gray-600 dark:text-gray-400 hover:text-primary transition">
-                  {link}
-                </a>
-              ))}
+          <AnimatedSection animation="slide-up">
+            <div className="flex flex-col sm:flex-row justify-between items-start gap-8 mb-8">
+              <Image src="/logo.png" alt="Curious Media" width={30} height={30} className="h-8 w-auto hover-lift" />
+              <div className="flex flex-wrap gap-4 sm:gap-6 text-sm">
+                {t.footer.links.map((link, i) => (
+                  <a
+                    key={i}
+                    href="#"
+                    className="text-gray-600 dark:text-gray-400 hover:text-primary transition-smooth relative group"
+                  >
+                    {link}
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-smooth group-hover:w-full" />
+                  </a>
+                ))}
+              </div>
             </div>
-          </div>
-          <div className="border-t border-gray-200 dark:border-gray-800 pt-8 text-center text-sm text-gray-600 dark:text-gray-400">
-            <p>{t.footer.copyright}</p>
-          </div>
+          </AnimatedSection>
+
+          <AnimatedSection animation="fade-in">
+            <div className="border-t border-gray-200/50 dark:border-gray-800/50 pt-8 text-center text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+              <p>{t.footer.copyright}</p>
+            </div>
+          </AnimatedSection>
         </div>
       </footer>
     </div>
