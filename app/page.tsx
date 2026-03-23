@@ -6,6 +6,7 @@ import { ChevronRight, Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { AnimatedSection } from '@/components/animated-section'
 import { StatCounter } from '@/components/stat-counter'
+import { WhatsAppFloat } from '@/components/whatsapp-float'
 
 const translations = {
   en: {
@@ -460,6 +461,14 @@ export default function Home() {
           </AnimatedSection>
         </div>
       </footer>
+
+      {/* WhatsApp Floating Button */}
+      <WhatsAppFloat
+        phoneNumber="+919876543210"
+        message="Have questions? Chat with us on WhatsApp for instant support and collaboration opportunities!"
+        popupTitle="Chat with Us"
+        popupDescription="Connect directly with our team for creators and brand partnerships."
+      />
     </div>
   )
 }
