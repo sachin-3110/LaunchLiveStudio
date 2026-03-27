@@ -1,6 +1,7 @@
-# curious-media-agency-homepage-design
+# curiousmedia-agency-homepage-design
 
-This is a [Next.js](https://nextjs.org) project.
+This is a [Next.js](https://nextjs.org) project 
+
 
 ## Getting Started
 
@@ -24,3 +25,4 @@ To learn more, take a look at the following resources:
 
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
