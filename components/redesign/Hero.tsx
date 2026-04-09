@@ -15,7 +15,7 @@ export const Hero = () => {
   }, [])
 
   return (
-    <section className="relative min-h-screen flex items-center px-6 pt-20 overflow-visible noise-bg">
+    <section className="relative min-h-screen flex items-center px-6 pt-20 overflow-hidden noise-bg">
       {/* Ambient Background */}
       <div className="absolute inset-0 z-[-1]">
         <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-accent/10 rounded-full blur-[120px] animate-pulse" />
@@ -71,18 +71,18 @@ export const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="max-w-md"
+            className="max-w-md w-full"
           >
             <p className="text-lg md:text-xl text-text-muted leading-relaxed">
               Launch Live Studio is a full service digital agency crafting
               high performance websites, AI systems, and brands that
               cut through the noise and lead.
             </p>
-            <div className="mt-10 flex items-center gap-6">
-              <Link href="/get-started" className="px-8 py-4 bg-accent text-white font-bold rounded-full hover:scale-105 active:scale-95 transition-all shadow-lg shadow-accent/20 text-center inline-block">
+            <div className="mt-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6 w-full">
+              <Link href="/get-started" className="w-full sm:w-auto px-8 py-4 bg-accent text-white font-bold rounded-full hover:scale-105 active:scale-95 transition-all shadow-lg shadow-accent/20 text-center inline-block">
                 Start a Project &rarr;
               </Link>
-              <Link href="/work" className="px-8 py-4 border border-foreground/10 hover:border-foreground/30 text-foreground font-bold rounded-full transition-all text-center inline-block">
+              <Link href="/work" className="w-full sm:w-auto px-8 py-4 border border-foreground/10 hover:border-foreground/30 text-foreground font-bold rounded-full transition-all text-center inline-block">
                 See Our Work &darr;
               </Link>
             </div>
@@ -122,3 +122,4 @@ export const Hero = () => {
     </section>
   )
 }
+

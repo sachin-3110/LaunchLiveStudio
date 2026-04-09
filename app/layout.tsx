@@ -48,7 +48,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${playfair.variable}`}>
-      <body className="bg-background text-foreground antialiased selection:bg-accent selection:text-background">
+      <body className="bg-background text-foreground antialiased selection:bg-accent selection:text-background overflow-x-hidden">
         {children}
         <Analytics />
       </body>

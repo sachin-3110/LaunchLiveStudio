@@ -39,14 +39,14 @@ export const Team = () => {
   return (
     <section className="py-12 md:py-16 px-6 bg-surface noise-bg">
       <div className="max-w-[1280px] mx-auto">
-        <div className="mb-12 text-center md:text-left flex flex-col md:flex-row justify-between items-end gap-6">
+        <div className="mb-12 text-center md:text-left flex flex-col md:flex-row justify-between items-center md:items-end gap-6">
           <div>
 
             <ScrambleHeading text="Projects we're" as="h2" className="text-5xl md:text-7xl font-serif mt-4" staggerMs={50} />
             <ScrambleHeading text="proud of." as="h2" className="text-5xl md:text-7xl font-serif underline decoration-accent underline-offset-8 decoration-1" staggerMs={50} />
             <p className="mt-6 text-text-muted text-lg max-w-md">Real results. Measurable outcomes. Work that speaks for itself.</p>
           </div>
-          <Link href="/work" className="px-8 py-4 border border-foreground/10 hover:border-foreground/30 text-foreground font-bold rounded-full transition-all whitespace-nowrap">
+          <Link href="/work" className="w-full md:w-auto px-8 py-4 border border-foreground/10 hover:border-foreground/30 text-foreground font-bold rounded-full transition-all text-center whitespace-nowrap">
             View All Work &rarr;
           </Link>
         </div>
@@ -87,3 +87,4 @@ export const Team = () => {
     </section>
   )
 }
+
